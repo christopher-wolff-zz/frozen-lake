@@ -33,12 +33,12 @@ def log_progress(episode, every=100):
 
 
 # hyperparameters
-num_episodes = 1000000
-gamma = 0.9  # discount factor
+num_episodes = 100000
+gamma = 0.99  # discount factor
 alpha = 0.5  # learning rate
 epsilon_i = 1  # initial exploration rate
 epsilon_f = 0.05  # final exploration rate
-epsilon_n = 1000000  # number of steps to decay exploration rate
+epsilon_n = 500000  # number of steps to decay exploration rate
 
 # create environment
 register(
