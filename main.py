@@ -8,9 +8,7 @@ import random
 import sys
 
 from gym.envs.registration import register
-from gym import wrappers
 from matplotlib import pyplot as plt
-from time import sleep
 
 
 def greedy(Q, action_space, state):
@@ -35,14 +33,12 @@ def log_progress(episode, every=100):
 
 
 # hyperparameters
-num_episodes = 10000
+num_episodes = 1000000
 gamma = 0.9  # discount factor
-alpha_i = 1  # initial learning rate
-alpha_f = 0.01  # final learning rate
-alpha_n = 25000  # number of steps to decay learning rate
+alpha = 0.5  # learning rate
 epsilon_i = 1  # initial exploration rate
 epsilon_f = 0.05  # final exploration rate
-epsilon_n = 25000  # number of steps to decay exploration rate
+epsilon_n = 1000000  # number of steps to decay exploration rate
 
 # create environment
 register(
@@ -52,7 +48,7 @@ register(
     max_episode_steps=100,
     reward_threshold=0.78,  # optimum = .8196
 )
-env = gym.make('FrozenLakeNotSlippery-v0')
+env = gym.make('FrozenLake-v0')
 
 # initialize Q-table
 Q = np.zeros((env.observation_space.n, env.action_space.n))
@@ -67,12 +63,6 @@ for episode in range(num_episodes):
     state = env.reset()
 
     for t in itertools.count():
-        # compute learning rate
-        if step_count < alpha_n:
-            alpha = alpha_i - step_count * (alpha_i - alpha_f) / alpha_n
-        else:
-            alpha = alpha_f
-
         # compute exploration rate
         if step_count < epsilon_n:
             epsilon = epsilon_i - step_count * (epsilon_i - epsilon_f) / epsilon_n
