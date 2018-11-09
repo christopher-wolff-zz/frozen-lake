@@ -33,12 +33,12 @@ def log_progress(episode, every=100):
 
 
 # hyperparameters
-num_episodes = 100000
+num_episodes = 10000
 gamma = 0.99  # discount factor
 alpha = 0.5  # learning rate
 epsilon_i = 1  # initial exploration rate
 epsilon_f = 0.05  # final exploration rate
-epsilon_n = 500000  # number of steps to decay exploration rate
+epsilon_n = 50000  # number of steps to decay exploration rate
 
 # create environment
 register(
@@ -48,7 +48,7 @@ register(
     max_episode_steps=100,
     reward_threshold=0.78,  # optimum = .8196
 )
-env = gym.make('FrozenLake-v0')
+env = gym.make('FrozenLakeNotSlippery-v0')
 
 # initialize Q-table
 Q = np.zeros((env.observation_space.n, env.action_space.n))
